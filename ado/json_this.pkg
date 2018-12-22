@@ -1,4 +1,4 @@
-v 3
+v 1.0
 
 d JSON_THIS: wrappers around reghdfe and ttest to save their results in JSON files.
 d
