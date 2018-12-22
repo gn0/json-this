@@ -1,0 +1,17 @@
+v 3
+
+d JSON_THIS: wrappers around reghdfe and ttest to save their results in JSON files.
+d
+d For a brief user's guide, see:
+d http://github.com/gn0/json-this/
+d
+d Author: Gabor Nyeki
+d
+d Required packages:
+d     reghdfe
+d
+d Distribution-Date: 20181222
+d
+
+f json_reghdfe.ado
+f json_ttest.ado
