@@ -105,7 +105,7 @@ The `replace` option can be used again to allow Stata to overwrite `foo.json`:
 json_ttest x == z using foo.json, replace
 ```
 
-`if' conditions and other options can also be passed on to `ttest`:
+`if` conditions and other options can also be passed on to `ttest`:
 
 ```Stata
 json_ttest x == z if a == 1 using foo.json, replace
