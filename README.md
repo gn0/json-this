@@ -6,6 +6,8 @@ This package provides wrappers around two Stata commands to save their results i
 - [`reghdfe`](http://scorreia.com/software/reghdfe/)
 - `ttest`
 
+The resulting JSON files can be used, for example, to generate arbitrarily formatted regression tables using the [coeftable](https://github.com/gn0/coeftable) Python package.
+
 ## Installation
 
 ```Stata
