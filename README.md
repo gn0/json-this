@@ -1,8 +1,9 @@
 
 # JSON This
 
-This package provides wrappers around two Stata commands to save their results in JSON files:
+This package provides wrappers around three Stata commands to save their results in JSON files:
 
+- `reg`
 - [`reghdfe`](http://scorreia.com/software/reghdfe/)
 - `ttest`
 
@@ -17,7 +18,10 @@ net install json_this, from("https://raw.githubusercontent.com/gn0/json-this/mas
 
 ## Usage
 
-### `json_reghdfe`
+### `json_reg` and `json_reghdfe`
+
+The usage of `json_reg` is nearly identical to that of `json_reghdfe`.
+This subsection illustrates the latter.
 
 Save the results of `reghdfe y x, absorb(z)` in a file called `foo.json`:
 
