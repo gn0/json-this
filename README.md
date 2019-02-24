@@ -164,7 +164,9 @@ reg y x z
 json_this lincom 3 * x - 10 * z using bar.json
 ```
 
-`bar.json` looks similar to the following:
+`json_this` does not clear `r()` and `e()`.
+If it did, it would not be able to run `lincom`.
+One side effect of this is that `bar.json` contains results from both `lincom` and `reg`:
 
 ```JSON
 {"cmd": "lincom",
