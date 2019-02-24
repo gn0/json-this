@@ -10,15 +10,17 @@ program define json_this
         exit 111
     }
 
+    local if_exp ""
+    if (`"`if'"' != "") {
+        local if_exp `"if `to_use'"'
+    }
+
     local weight_exp ""
     if ("`weight'" != "") {
         local weight_exp "[`weight'=`exp']"
     }
 
-    return clear
-    ereturn clear
-
-    `anything' if `to_use' `weight_exp', `options'
+    `anything' `if_exp' `weight_exp', `options'
 
     local r_scalars : r(scalars)
     local r_macros : r(macros)
@@ -46,6 +48,20 @@ program define json_this
             }
 
             local output `"`output'},"'
+        }
+    }
+
+    if (~missing(`"`tabparams'"')) {
+        forval i = 1(2)`: word count `tabparams'' {
+            local key : word `i' of `tabparams'
+            local value : word `= `i' + 1' of `tabparams'
+
+            if (~missing(real("`value'"))) {
+                local output `"`output' "`key'": `value',"'
+            }
+            else {
+                local output `"`output' "`key'": "`value'","'
+            }
         }
     }
 
