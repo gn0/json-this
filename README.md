@@ -1,7 +1,9 @@
 
 # JSON This
 
-This package provides wrappers around three Stata commands to save their results in JSON files:
+This package provides wrappers around Stata commands to save their results in JSON files.
+A generic wrapper, `json_this`, works with any r-class or e-class command.
+In addition to this, the package also contains three specialized wrappers around:
 
 - `reg`
 - [`reghdfe`](http://scorreia.com/software/reghdfe/)
@@ -116,6 +118,114 @@ json_ttest x == z if a == 1 using foo.json, replace
 json_ttest x using foo.json, by(a) replace
 json_ttest x == z using foo.json, unpaired replace
 ```
+
+### `json_this`
+
+`json_reg`, `json_reghdfe`, and `json_ttest` are specifically designed to export results from linear regressions and hypothesis tests.
+Results from other types of commands can be exported with `json_this`.
+`json_this` is a generic wrapper for r-class and e-class commands.
+
+Save the results of `summarize x, detail` in a file called `foo.json`:
+
+```Stata
+json_this summarize x using foo.json, detail
+```
+
+`foo.json` looks similar to the following (broken up into multiple lines for legibility):
+
+```JSON
+{"cmd": "summarize",
+ "r_scalars": {
+   "N": 15805,
+   "sum_w": 15805,
+   "mean": 768.3155963302752,
+   "Var": 27148076.45847922,
+   "sd": 5210.381603921081,
+   "skewness": 55.50313309587089,
+   "kurtosis": 3639.847818166637,
+   "sum": 12143228,
+   "min": 7,
+   "max": 362289,
+   "p1": 27,
+   "p5": 52,
+   "p10": 77,
+   "p25": 137,
+   "p50": 270,
+   "p75": 551,
+   "p90": 1138,
+   "p95": 2114,
+   "p99": 9671}}
+```
+
+Save the results of `lincom`, after running `reg`, in a file called `bar.json`:
+
+```Stata
+reg y x z
+json_this lincom 3 * x - 10 * z using bar.json
+```
+
+`bar.json` looks similar to the following:
+
+```JSON
+{"cmd": "lincom",
+ "r_scalars": {
+   "df": 12775,
+   "se": 510.7233517176288,
+   "estimate": 306.5145980089461},
+ "e_scalars": {
+   "rank": 3,
+   "ll_0": -125549.2076105619,
+   "ll": -107910.0624743788,
+   "r2_a": .9367528438844114,
+   "rss": 16188712291.35621,
+   "mss": 239810888673.0277,
+   "rmse": 1125.707858761062,
+   "r2": .9367627440419,
+   "F": 94620.99417362853,
+   "df_r": 12775,
+   "df_m": 2,
+   "N": 12778},
+ "e_macros": {
+   "cmdline": "regress y x z",
+   "title": "Linear regression",
+   "marginsok": "XB default",
+   "vce": "ols",
+   "depvar": "y",
+   "cmd": "regress",
+   "properties": "b V",
+   "predict": "regres_p",
+   "model": "ols",
+   "estat_cmd": "regress_estat"}}
+```
+
+`json_this` can also be used to export results from user-written programs.
+For example, the following program called `baz` saves its results in `r()` scalars:
+
+```Stata
+program define baz, rclass
+    return scalar a = 2
+    return scalar b = 3
+    return scalar c = 5
+end
+```
+
+Save these in a file called `baz.json`:
+
+```Stata
+json_this baz using baz.json
+```
+
+Then `baz.json` contains:
+
+```JSON
+{"cmd": "baz",
+ "r_scalars": {
+   "c": 5,
+   "b": 3,
+   "a": 2}}
+```
+
+`json_this` also accepts the `replace` option to allow Stata to overwrite the output file.
 
 ## Author
 
