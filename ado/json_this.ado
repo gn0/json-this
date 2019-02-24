@@ -40,7 +40,11 @@ program define json_this
                 local value "``ret_type'(`var')'"
 
                 if (~missing(real("`value'"))) {
-                    local output `"`output' "`var'": `value',"'
+                    local number = `value'
+                    local number = regexr("`number'", "^[.]", "0.")
+                    local number = regexr("`number'", "^-[.]", "-0.")
+
+                    local output `"`output' "`var'": `number',"'
                 }
                 else {
                     local output `"`output' "`var'": "`value'","'
@@ -57,7 +61,11 @@ program define json_this
             local value : word `= `i' + 1' of `tabparams'
 
             if (~missing(real("`value'"))) {
-                local output `"`output' "`key'": `value',"'
+                local number = `value'
+                local number = regexr("`number'", "^[.]", "0.")
+                local number = regexr("`number'", "^-[.]", "-0.")
+
+                local output `"`output' "`key'": `number',"'
             }
             else {
                 local output `"`output' "`key'": "`value'","'
