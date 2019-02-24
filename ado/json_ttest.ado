@@ -1,4 +1,4 @@
-*! version 1.0 3sep2018
+*! version 1.1 24feb2019
 
 capture program drop json_ttest
 program define json_ttest
@@ -45,7 +45,7 @@ program define json_ttest
             }
         }
 
-        local output `"`output' "if_cond": "`if'","'
+        local output `"`output' "if_cond": "`: subinstr local if `"""' `"\""', all'","'
         local output `"`output' "by_var": "`by'","'
 
         if (~missing(r(mu_1) - r(mu_2))) {
