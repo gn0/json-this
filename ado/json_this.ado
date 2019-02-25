@@ -1,4 +1,4 @@
-*! version 1.0 24feb2019
+*! version 1.1 25feb2019
 
 capture program drop json_this
 program define json_this
@@ -27,7 +27,9 @@ program define json_this
     local e_scalars : e(scalars)
     local e_macros : e(macros)
 
-    local output `"{"cmd": "`: word 1 of `anything''","'
+    local output `"{"cmd": "`: subinstr local anything `"""' `"\""', all'","'
+    local output `"`output' "if_cond": "`: subinstr local if `"""' `"\""', all'","'
+    local output `"`output' "weight_exp": "`weight_exp'","'
 
     forval i = 1/4 {
         local vars : word `i' of r_scalars r_macros e_scalars e_macros
@@ -47,7 +49,7 @@ program define json_this
                     local output `"`output' "`var'": `number',"'
                 }
                 else {
-                    local output `"`output' "`var'": "`value'","'
+                    local output `"`output' "`var'": "`: subinstr local value `"""' `"\""', all'","'
                 }
             }
 

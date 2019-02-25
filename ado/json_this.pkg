@@ -1,4 +1,4 @@
-v 1.1
+v 1.2
 
 d JSON_THIS: wrappers around reg, reghdfe, ttest, and arbitrary r-class and e-class Stata commands to save their results in JSON files.
 d
@@ -10,7 +10,7 @@ d
 d Required packages:
 d     reghdfe
 d
-d Distribution-Date: 20190224
+d Distribution-Date: 20190225
 d
 
 f json_reg.ado
